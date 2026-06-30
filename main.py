@@ -4,21 +4,31 @@ import output
 import database
 import sqlite3
 
-# 1. Initialize DB
+import getnews
+import analysis
+import database
+import comparison
+import sqlite3
+
 database.create_database()
 
-# 2. Fetch and store articles, getting their unique database IDs
-article_ids = getnews.get_articles("prediction market", count=10)
+# 1. Gather data for Topic A
+topic_1 = "artificial intelligence"
+ids_1 = getnews.get_articles(topic_1, count=15)
 
-# 3. Analyze each freshly pulled article
+# 2. Gather data for Topic B
+topic_2 = "climate change"
+ids_2 = getnews.get_articles(topic_2, count=15)
+
+# 3. Process all of them
 conn = sqlite3.connect('news_analysis.db')
-for aid in article_ids:
+for aid in ids_1 + ids_2:
     analysis.get_analysis_results(conn, aid)
 conn.close()
 
-# 4. Export results
-output.output_results()
-
+# 4. Compare them!
+metrics = comparison.analyze_topic_comparison(topic_1, topic_2)
+comparison.print_comparison_report(metrics, topic_1, topic_2)
 
 
 
