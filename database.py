@@ -43,3 +43,9 @@ def update_article_analysis(conn, article_id, emotion_overall, emotion_score_ove
         WHERE id = ?
     ''', (emotion_overall, emotion_score_overall, emotion_positive_score, emotion_negative_score, emotion_dispersion, article_id))
     conn.commit()
+
+def get_article_text(conn, article_id):
+    c = conn.cursor()
+    c.execute('SELECT content FROM articles WHERE id = ?', (article_id,))
+    row = c.fetchone()
+    return row[0] if row else ""
