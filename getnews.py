@@ -21,11 +21,12 @@ def get_articles(topic, count=10):
     response = requests.get(url, params=params)
     data = response.json()
 
-    articles = []
+    article_ids = []
     conn = sqlite3.connect('news_analysis.db')
-    for article in data["articles"]:
-        database.insert_article(conn, topic, article['title'], article['description'], article['content'], article['source']['name'], article['url'], article['publishedAt'])
-        articles.append(article)
+    for article in data.get("articles", []):
+        # Capture the newly inserted primary key ID
+        article_id = database.insert_article(conn, topic, article['title'], article['description'], article['content'], article['source']['name'], article['url'], article['publishedAt'])
+        article_ids.append(article_id)
     conn.close()
-    return articles
+    return article_ids  # Return IDs so main.py knows what to analyze
 
