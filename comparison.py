@@ -45,16 +45,3 @@ def print_comparison_report(metrics, topic_a, topic_b):
     a = metrics[topic_a]
     b = metrics[topic_b]
     
-    print(f"\n=== COMPARISON REPORT: {topic_a.upper()} vs {topic_b.upper()} ===")
-    print(f"Articles Analyzed: {topic_a}: {a['count']} | {topic_b}: {b['count']}")
-    print("-" * 50)
-    print(f"Average Sentiment (Compound):")
-    print(f"  {topic_a}: {a['avg_compound']:.4f}")
-    print(f"  {topic_b}: {b['avg_compound']:.4f}")
-    print(f"  -> Winner (More Positive): {topic_a if a['avg_compound'] > b['avg_compound'] else topic_b}")
-    print("-" * 50)
-    print(f"Emotional Volatility (Average Sentence Variance):")
-    print(f"  {topic_a}: {a['avg_variance']:.4f}")
-    print(f"  {topic_b}: {b['avg_variance']:.4f}")
-    print(f"  -> Meaning: The higher score means the text swings more wildly between emotions sentence-by-sentence.")
-    print("==================================================\n")
